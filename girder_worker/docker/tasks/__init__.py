@@ -29,7 +29,7 @@ from girder_worker.docker.transforms import (
 from girder_worker_utils import _walk_obj
 
 
-BLACKLISTED_DOCKER_RUN_ARGS = ['tty', 'detach']
+BLACKLISTED_DOCKER_RUN_ARGS = ['tty', 'detach', 'shm_size']
 
 
 def _pull_image(image):
@@ -298,10 +298,12 @@ def _docker_run(task, image, pull_image=True, entrypoint=None, container_args=No
     if entrypoint is not None and not isinstance(entrypoint, (list, tuple)):
         entrypoint = [entrypoint]
 
+    logger.info('--- QRITIVE: Adding shared memory size to docker run ---')
     run_kwargs = {
         'tty': False,
         'volumes': volumes,
-        'detach': True
+        'detach': True,
+        'shm_size': '1G'
     }
 
     # Allow run args to be overridden,filter out any we don't want to override
