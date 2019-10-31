@@ -303,7 +303,7 @@ def _docker_run(task, image, pull_image=True, entrypoint=None, container_args=No
         'tty': False,
         'volumes': volumes,
         'detach': True,
-        'shm_size': '1G'
+        'shm_size': '5G'
     }
 
     # Allow run args to be overridden,filter out any we don't want to override
